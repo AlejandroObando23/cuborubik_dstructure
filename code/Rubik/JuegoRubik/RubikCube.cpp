@@ -296,3 +296,232 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 	DrawCube(view, projection);
 	
 }
+
+void RubikCube3x3::Solve(STATE_ANIMATION& some_state)
+{
+	//std::stringstream ss;
+	//ss << rubikSolver;
+	//std::cout << "Cube form to solve: \n";
+	//std::cout << ss.str() << "\n";
+	rubikSolver.solve(solution);
+	//std::cout << "Solution: \n";
+	for (int movement = 0; movement < solution.size(); ++movement) {
+		//std::cout << solution[movement] << " ";
+		if (solution[movement] == 'F')
+			solutionStates.push(STATE_ANIMATION::F);
+		else if (solution[movement] == 'f')
+			solutionStates.push(STATE_ANIMATION::f);
+		else if (solution[movement] == 'W')
+			solutionStates.push(STATE_ANIMATION::B);
+		else if (solution[movement] == 'w')
+			solutionStates.push(STATE_ANIMATION::b);
+		else if (solution[movement] == 'R')
+			solutionStates.push(STATE_ANIMATION::R);
+		else if (solution[movement] == 'r')
+			solutionStates.push(STATE_ANIMATION::r);
+		else if (solution[movement] == 'L')
+			solutionStates.push(STATE_ANIMATION::L);
+		else if (solution[movement] == 'l')
+			solutionStates.push(STATE_ANIMATION::l);
+		else if (solution[movement] == 'U')
+			solutionStates.push(STATE_ANIMATION::U);
+		else if (solution[movement] == 'u')
+			solutionStates.push(STATE_ANIMATION::u);
+		else if (solution[movement] == 'D')
+			solutionStates.push(STATE_ANIMATION::D);
+		else if (solution[movement] == 'd')
+			solutionStates.push(STATE_ANIMATION::d);
+	}
+	//std::cout << "\n\n";
+	solution.clear();
+	// una vez contruida la solución, se pone el primer estado
+	some_state = solutionStates.front();
+	solutionStates.pop(); // un pop porque ya consumimos un movimiento
+}
+
+
+void RubikCube3x3::AssociateVAO(GLuint VAO)
+{
+	RVAO = VAO;
+}
+
+
+// retorna verdadero cuando la animación ha terminado
+bool RubikCube3x3::f(float parts)
+{
+	glm::mat4 R(1.0f);
+	glm::vec3 z = glm::vec3(0.0f, 0.0f, 1.0f);
+	CalculateRotation(parts, z, R, 'a');
+	angle += step;
+
+	cubes[6].model = R * cubes[6].model;
+	cubes[7].model = R * cubes[7].model;
+	cubes[8].model = R * cubes[8].model;
+	cubes[15].model = R * cubes[15].model;
+	cubes[16].model = R * cubes[16].model;
+	cubes[17].model = R * cubes[17].model;
+	cubes[24].model = R * cubes[24].model;
+	cubes[25].model = R * cubes[25].model;
+	cubes[26].model = R * cubes[26].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		// ahora debemos actualizar las coordenadas y modelos de los cubos que cambian por la rotación
+		Cube tmp_6 = cubes[6], tmp_7 = cubes[7], tmp_8 = cubes[8];
+		Cube tmp_15 = cubes[15], tmp_17 = cubes[17];
+		Cube tmp_24 = cubes[24], tmp_25 = cubes[25], tmp_26 = cubes[26];
+		cubes[6] = tmp_8, cubes[7] = tmp_17, cubes[8] = tmp_26;
+		cubes[15] = tmp_7, cubes[17] = tmp_25;
+		cubes[24] = tmp_6, cubes[25] = tmp_15, cubes[26] = tmp_24;
+		return true;
+	}
+	return false;
+}
+
+
+bool RubikCube3x3::r(float parts)
+{
+	glm::mat4 R(1.0f);
+	glm::vec3 x = glm::vec3(1.0f, 0.0f, 0.0f);
+	CalculateRotation(parts, x, R, 'a');
+	angle += step;
+	cubes[8].model = R * cubes[8].model;
+	cubes[5].model = R * cubes[5].model;
+	cubes[2].model = R * cubes[2].model;
+	cubes[17].model = R * cubes[17].model;
+	cubes[14].model = R * cubes[14].model;
+	cubes[11].model = R * cubes[11].model;
+	cubes[26].model = R * cubes[26].model;
+	cubes[23].model = R * cubes[23].model;
+	cubes[20].model = R * cubes[20].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		Cube tmp_8 = cubes[8], tmp_5 = cubes[5], tmp_2 = cubes[2];
+		Cube tmp_17 = cubes[17], tmp_11 = cubes[11];
+		Cube tmp_26 = cubes[26], tmp_23 = cubes[23], tmp_20 = cubes[20];
+		cubes[8] = tmp_2, cubes[5] = tmp_11, cubes[2] = tmp_20;
+		cubes[17] = tmp_5, cubes[11] = tmp_23;
+		cubes[26] = tmp_8, cubes[23] = tmp_17, cubes[20] = tmp_26;
+		return true;
+	}
+	return false;
+}
+
+
+bool RubikCube3x3::u(float parts)
+{
+	glm::mat4 R;
+	glm::vec3 y = glm::vec3(0.0f, 1.0f, 0.0f);
+	CalculateRotation(parts, y, R, 'a');
+	angle += step;
+	cubes[0].model = R * cubes[0].model;
+	cubes[1].model = R * cubes[1].model;
+	cubes[2].model = R * cubes[2].model;
+	cubes[3].model = R * cubes[3].model;
+	cubes[4].model = R * cubes[4].model;
+	cubes[5].model = R * cubes[5].model;
+	cubes[6].model = R * cubes[6].model;
+	cubes[7].model = R * cubes[7].model;
+	cubes[8].model = R * cubes[8].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		Cube tmp_0 = cubes[0], tmp_1 = cubes[1], tmp_2 = cubes[2];
+		Cube tmp_3 = cubes[3], tmp_5 = cubes[5];
+		Cube tmp_6 = cubes[6], tmp_7 = cubes[7], tmp_8 = cubes[8];
+		cubes[0] = tmp_2, cubes[1] = tmp_5, cubes[2] = tmp_8;
+		cubes[3] = tmp_1, cubes[5] = tmp_7;
+		cubes[6] = tmp_0, cubes[7] = tmp_3, cubes[8] = tmp_6;
+		return true;
+	}
+	return false;
+}
+
+bool RubikCube3x3::b(float parts)
+{
+	glm::mat4 R(1.0f);
+	glm::vec3 z = glm::vec3(0.0f, 0.0f, -1.0f); // z negativo
+	CalculateRotation(parts, z, R, 'a');
+	angle += step;
+	cubes[2].model = R * cubes[2].model;
+	cubes[1].model = R * cubes[1].model;
+	cubes[0].model = R * cubes[0].model;
+	cubes[11].model = R * cubes[11].model;
+	cubes[10].model = R * cubes[10].model;
+	cubes[9].model = R * cubes[9].model;
+	cubes[20].model = R * cubes[20].model;
+	cubes[19].model = R * cubes[19].model;
+	cubes[18].model = R * cubes[18].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		Cube tmp_2 = cubes[2], tmp_1 = cubes[1], tmp_0 = cubes[0];
+		Cube tmp_11 = cubes[11], tmp_9 = cubes[9];
+		Cube tmp_20 = cubes[20], tmp_19 = cubes[19], tmp_18 = cubes[18];
+		cubes[2] = tmp_0, cubes[1] = tmp_9, cubes[0] = tmp_18;
+		cubes[11] = tmp_1, cubes[9] = tmp_19;
+		cubes[20] = tmp_2, cubes[19] = tmp_11, cubes[18] = tmp_20;
+		return true;
+	}
+	return false;
+}
+
+bool RubikCube3x3::l(float parts)
+{
+	glm::mat4 R(1.0f);
+	glm::vec3 x = glm::vec3(-1.0f, 0.0f, 0.0f); // negative x
+	CalculateRotation(parts, x, R, 'a');
+	angle += step;
+	cubes[0].model = R * cubes[0].model;
+	cubes[3].model = R * cubes[3].model;
+	cubes[6].model = R * cubes[6].model;
+	cubes[9].model = R * cubes[9].model;
+	cubes[12].model = R * cubes[12].model;
+	cubes[15].model = R * cubes[15].model;
+	cubes[18].model = R * cubes[18].model;
+	cubes[21].model = R * cubes[21].model;
+	cubes[24].model = R * cubes[24].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		Cube tmp_0 = cubes[0], tmp_3 = cubes[3], tmp_6 = cubes[6];
+		Cube tmp_9 = cubes[9], tmp_15 = cubes[15];
+		Cube tmp_18 = cubes[18], tmp_21 = cubes[21], tmp_24 = cubes[24];
+		cubes[0] = tmp_6, cubes[3] = tmp_15, cubes[6] = tmp_24;
+		cubes[9] = tmp_3, cubes[15] = tmp_21;
+		cubes[18] = tmp_0, cubes[21] = tmp_9, cubes[24] = tmp_18;
+		return true;
+	}
+	return false;
+}
+
+
+bool RubikCube3x3::d(float parts)
+{
+	glm::mat4 R(1.0f);
+	glm::vec3 y = glm::vec3(0.0f, -1.0f, 0.0f); // y negativo
+	CalculateRotation(parts, y, R, 'a');
+	angle += step;
+	cubes[24].model = R * cubes[24].model;
+	cubes[25].model = R * cubes[25].model;
+	cubes[26].model = R * cubes[26].model;
+	cubes[21].model = R * cubes[21].model;
+	cubes[22].model = R * cubes[22].model;
+	cubes[23].model = R * cubes[23].model;
+	cubes[18].model = R * cubes[18].model;
+	cubes[19].model = R * cubes[19].model;
+	cubes[20].model = R * cubes[20].model;
+	if (angle >= 90)
+	{
+		angle = 0.0f;
+		Cube tmp_24 = cubes[24], tmp_25 = cubes[25], tmp_26 = cubes[26];
+		Cube tmp_21 = cubes[21], tmp_23 = cubes[23];
+		Cube tmp_18 = cubes[18], tmp_19 = cubes[19], tmp_20 = cubes[20];
+		cubes[24] = tmp_26, cubes[25] = tmp_23, cubes[26] = tmp_20;
+		cubes[21] = tmp_25, cubes[23] = tmp_19;
+		cubes[18] = tmp_24, cubes[19] = tmp_21, cubes[20] = tmp_18;
+		return true;
+	}
+	return false;
+}
