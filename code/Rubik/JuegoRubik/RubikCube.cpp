@@ -47,6 +47,57 @@ Cube::~Cube() {}
 // ////////////////////
 // Aplica los movimientos al solver y se encarga de eliminar los movimientos
 // cuando el solver se está resolviendo
+void RubikCube3x3::HandleRubikMoves(char movement)
+{
+	static bool was_last_move = false;
+	// un booleano para determinar si un movimiento fué el último de la solucion del stack
+	if (solutionStates.empty() && !was_last_move) {
+		switch (movement)
+		{
+		case 'U':
+			rubikSolver.U(solution);
+			break;
+		case 'u':
+			rubikSolver.u(solution);
+			break;
+		case 'L':
+			rubikSolver.L(solution);
+			break;
+		case 'l':
+			rubikSolver.l(solution);
+			break;
+		case 'F':
+			rubikSolver.F(solution);
+			break;
+		case 'f':
+			rubikSolver.f(solution);
+			break;
+		case 'R':
+			rubikSolver.R(solution);
+			break;
+		case 'r':
+			rubikSolver.r(solution);
+			break;
+		case 'B':
+			rubikSolver.B(solution);
+			break;
+		case 'b':
+			rubikSolver.b(solution);
+			break;
+		case 'D':
+			rubikSolver.D(solution);
+			break;
+		case 'd':
+			rubikSolver.d(solution);
+			break;
+		}
+	}
+	if (was_last_move) was_last_move = false;
+	if (!solutionStates.empty()) {
+		solutionStates.pop();
+		if (solutionStates.empty()) was_last_move = true;
+	}
+}
 
 // orientation: h significa horario, a significa antihorario
 void RubikCube3x3::CalculateRotation(float& parts, glm::vec3& axis, glm::mat4& rotationMatrix, char orientation)

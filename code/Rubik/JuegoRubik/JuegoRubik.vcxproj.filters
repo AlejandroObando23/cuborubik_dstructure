@@ -27,12 +27,18 @@
     <ClCompile Include="shader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="defineRubik.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RubikCube.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="defineRubik.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
