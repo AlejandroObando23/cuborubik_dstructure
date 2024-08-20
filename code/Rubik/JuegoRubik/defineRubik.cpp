@@ -832,6 +832,150 @@ namespace solver {
 		}
 	}
 
+	void Rubik::thirdStep(vector<char>& solution) {
+		yellowCross(solution);
+		finalCorners(solution);
+	}
+	void Rubik::yellowCross(vector<char>& solution) {
+		bool repeat;
+		if ((edge[4].down == 'y') && (edge[5].down == 'y') &&
+			(edge[6].down == 'y') && (edge[7].down == 'y')) 	// LDBdbl && frdRDF Yellow center
+			sequence("LDBdblfrdRDF", solution);
+		else if ((edge[4].down == 'y') && (edge[5].down != 'y') &&
+			(edge[6].down == 'y') && (edge[7].down != 'y')) 	// frdRDF Horizontal line
+			sequence("frdRDF", solution);
+		else if ((edge[4].down != 'y') && (edge[5].down == 'y') &&
+			(edge[6].down != 'y') && (edge[7].down == 'y')) 	// lfdFDL  Vertical line
+			sequence("lfdFDL", solution);
+
+		else if ((edge[4].down != 'y') && (edge[5].down != 'y') &&
+			(edge[6].down == 'y') && (edge[7].down == 'y')) 	// LDBdbl 'L' case
+			sequence("LDBdbl", solution);
+
+		else if ((edge[4].down != 'y') && (edge[5].down == 'y') &&
+			(edge[6].down == 'y') && (edge[7].down != 'y')) 	// BDRdrb '_|' case
+			sequence("BDRdrb", solution);
+		else if ((edge[4].down == 'y') && (edge[5].down == 'y') &&
+			(edge[6].down != 'y') && (edge[7].down != 'y')) 	// RDFdfr '¬' case
+			sequence("RDFdfr", solution);
+		else if ((edge[4].down == 'y') && (edge[5].down != 'y') &&
+			(edge[6].down != 'y') && (edge[7].down == 'y')) 	// FDLdlf ' ¬' reverse case
+			sequence("FDLdlf", solution);
+		else {
+			int yellows = 0;
+			int whistleBlower1, whistleBlower2;
+			for (int i = 0; i < 4; ++i) {
+				if (edge[i].up == 'y') {
+					yellows++;
+					whistleBlower2 = i;
+				}
+				else
+					whistleBlower1 = i;
+			}
+			if (yellows == 3)
+				cout << "This Rubik's cube has no solution, you neew change the orientation of the edge (" << edge[whistleBlower1].up << "," << edge[whistleBlower1].down << ").\n";
+			else if (yellows == 1)
+				cout << "This Rubik's cube has no solution, you neew change the orientation of the edge (" << edge[whistleBlower2].up << "," << edge[whistleBlower2].down << ").\n";
+		}
+
+
+		// Orientate final edgess:
+		repeat = true;
+		int contador = 0;
+		while (repeat) {
+			if ((edge[4].down == 'r') && (edge[5].down == 'g') &&
+				(edge[6].down == 'l') && (edge[7].down == 'o')) { // bdBdbD2Bd '¬'
+				sequence("bdBdbDDBd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'o') && (edge[5].down == 'r') &&
+				(edge[6].down == 'l') && (edge[7].down == 'g')) { 	// rdRdrD2Rd '¬' reverse
+				sequence("rdRdrDDRd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'g') && (edge[5].down == 'r') &&
+				(edge[6].down == 'o') && (edge[7].down == 'l')) { // fdFdfD2Fd 'L'
+				sequence("fdFdfDDFd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'g') && (edge[5].down == 'l') &&
+				(edge[6].down == 'r') && (edge[7].down == 'o')) { 	// ldLdlD2Ld '_|'
+				sequence("ldLdlDDLd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'l') && (edge[5].down == 'r') &&
+				(edge[6].down == 'g') && (edge[7].down == 'o')) { 	// rdRdrD2RD2 && bdBdbD2Bd '--'
+				sequence("rdRdrDDRDDbdBdbDDBd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'g') && (edge[5].down == 'o') &&
+				(edge[6].down == 'l') && (edge[7].down == 'r')) { 	// rdRdrD2R && fdFdfD2Fd '|'
+				sequence("rdRdrDDRfdFdfDDFd", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'y') && (edge[5].down == 'y') &&
+				(edge[6].down == 'y') && (edge[7].down == 'y')) { 	//
+				sequence("RldRldRldRldRldRldRldRld", solution);
+				repeat = false;
+			}
+			else if ((edge[4].down == 'g') && (edge[5].down == 'r') &&
+				(edge[6].down == 'l') && (edge[7].down == 'o')) 	//
+				repeat = false;
+			else {
+				D(solution);
+				++contador;
+				if (contador == 5) { // bdBdbD2Bd
+					contador = 0;
+					sequence("bdBdbDDBd", solution);
+					return;
+				}
+			}
+		} // endwhile
+	}
+	void Rubik::finalCorners(vector<char>& solution) {
+		permutationFinalCorners(solution);
+		positionFinalCorners(solution);
+	}
+	void Rubik::permutationFinalCorners(vector<char>& solution) {
+		bool repeat = true;
+		while (repeat) {
+			if (searchCorner('y', 'o', 'g') == 4) {
+				if (searchCorner('y', 'r', 'l') == 5) // rDLdRDld
+					sequence("rDLdRDld", solution);
+				else if (searchCorner('y', 'r', 'l') == 7) // BdfDbdFD
+					sequence("BdfDbdFD", solution);
+
+				repeat = false;
+			}
+			else if (searchCorner('y', 'g', 'r') == 5) {
+				if (searchCorner('y', 'r', 'l') == 4) // bDFdBDfd
+					sequence("bDFdBDfd", solution);
+				else if (searchCorner('y', 'r', 'l') == 7) // LdrDldRD
+					sequence("LdrDldRD", solution);
+
+				repeat = false;
+			}
+			else if (searchCorner('y', 'l', 'o') == 7) {
+				if (searchCorner('y', 'r', 'l') == 4) // RdlDrdLD
+					sequence("RdlDrdLD", solution);
+				else if (searchCorner('y', 'r', 'l') == 5) // fDBdFDbd
+					sequence("fDBdFDbd", solution);
+
+				repeat = false;
+			}
+			else if (searchCorner('y', 'r', 'l') == 6) {
+				if (searchCorner('y', 'o', 'g') == 5) // FdbDfdBD
+					sequence("FdbDfdBD", solution);
+				else if (searchCorner('y', 'o', 'g') == 7) // lDRdLDrd
+					sequence("lDRdLDrd", solution);
+
+				repeat = false;
+			}
+			else // LdrDldRD
+				sequence("LdrDldRD", solution);
+		}
+	}
+
 
 	// Public interface
 	Rubik::Rubik() {
