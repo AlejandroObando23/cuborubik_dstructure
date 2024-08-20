@@ -195,6 +195,644 @@ namespace solver {
 	}
 
 
+	// Parts of the solution
+	void Rubik::firstStep(vector<char>& solution) {
+		whiteCross(solution);
+		cornersFirstStep(solution);
+	}
+	void Rubik::whiteCross(vector<char>& solution) {
+		int position = searchEdge('w', 'g'); // White, green.
+		if (position == 0) {
+			if (edge[0].down == 'w') // FuRU
+				sequence("FuRU", solution);
+		}
+		else if (position == 1) {
+			if (edge[1].up == 'w') // ruRU
+				sequence("ruRU", solution);
+			else // rf
+				sequence("rf", solution);
+		}
+		else if (position == 2) {
+			if (edge[2].up == 'w') // bR2f --> U2
+				sequence("UU", solution);
+			else // burU
+				sequence("burU", solution);
+		}
+		else if (position == 3) {
+			if (edge[3].up == 'w') // LUlu
+				sequence("LUlu", solution);
+			else // LF
+				sequence("LF", solution);
+		}
+		else if (position == 4) {
+			if (edge[4].up == 'w') // F2
+				F2(solution);
+			else // fuRU
+				sequence("fuRU", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].up == 'w') // dF2
+				sequence("dFF", solution);
+			else // Rf
+				sequence("Rf", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].up == 'w') // D2F2
+				sequence("DDFF", solution);
+			else // dRf
+				sequence("dRf", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].up == 'w') // DF2
+				sequence("DFF", solution);
+			else // lF
+				sequence("lF", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].up == 'w') // uRU
+				sequence("uRU", solution);
+			else // f
+				sequence("f", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].up == 'w') // urU
+				sequence("urU", solution);
+			else // U2BU2
+				sequence("UUBUU", solution);
+		}
+		else if (position == 10) {
+			if (edge[10].up == 'w') // ULu
+				sequence("ULu", solution);
+			else // U2bU2
+				sequence("UUbUU", solution);
+		}
+		else if (position == 11) {
+			if (edge[11].up == 'w') // Ulu
+				sequence("Ulu", solution);
+			else // F
+				sequence("F", solution);
+		}
+
+		position = searchEdge('w', 'r'); // White/red
+		if (position == 1) {
+			if (edge[1].down == 'w') // rUfu
+				sequence("rUfu", solution);
+		}
+		else if (position == 2) {
+			if (edge[2].up == 'w') // buBU
+				sequence("buBU", solution);
+			else // br
+				sequence("br", solution);
+		}
+		else if (position == 3) {
+			if (edge[3].up == 'w') // L2D2R2
+				sequence("LLDDRR", solution);
+			else // LUFu
+				sequence("LUFu", solution);
+		}
+		else if (position == 4) {
+			if (edge[4].up == 'w') // DR2
+				sequence("DRR", solution);
+			else // fRF
+				sequence("fRF", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].up == 'w') // R2
+				R2(solution);
+			else // RUfu
+				sequence("RUfu", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].up == 'w') // dR2
+				sequence("dRR", solution);
+			else // Br
+				sequence("Br", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].up == 'w') // D2R2
+				sequence("DDRR", solution);
+			else // lUFu
+				sequence("lUFu", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].up == 'w') // R
+				sequence("R", solution);
+			else // Ufu
+				sequence("Ufu", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].up == 'w') // r
+				sequence("r", solution);
+			else // uBU
+				sequence("uBU", solution);
+		}
+		else if (position == 10) {
+			if (edge[10].up == 'w') // U2LU2
+				sequence("UULUU", solution);
+			else // ubU
+				sequence("ubU", solution);
+		}
+		else if (position == 11) {
+			if (edge[11].up == 'w') // U2lU2
+				sequence("UUlUU", solution);
+			else // UFu
+				sequence("UFu", solution);
+		}
+
+
+		position = searchEdge('w', 'l'); // White/blue
+		if (position == 2) {
+			if (edge[2].down == 'w') // bUru
+				sequence("bUru", solution);
+		}
+		else if (position == 3) {
+			if (edge[3].up == 'w') // LulU
+				sequence("LulU", solution);
+			else // lb
+				sequence("lb", solution);
+		}
+		else if (position == 4) {
+			if (edge[4].up == 'w') // D2B2
+				sequence("DDBB", solution);
+			else // uFlU
+				sequence("uFlU", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].up == 'w') // DB2
+				sequence("DBB", solution);
+			else // rBR
+				sequence("rBR", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].up == 'w') // B2
+				B2(solution);
+			else // BUru
+				sequence("BUru", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].up == 'w') // dB2
+				sequence("dBB", solution);
+			else // Lb
+				sequence("Lb", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].up == 'w') // URu
+				sequence("URu", solution);
+			else // U2fU2
+				sequence("UUfUU", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].up == 'w') // Uru
+				sequence("Uru", solution);
+			else // B
+				B(solution);
+		}
+		else if (position == 10) {
+			if (edge[10].up == 'w') // uLU
+				sequence("uLU", solution);
+			else // b
+				b(solution);
+		}
+		else if (position == 11) {
+			if (edge[11].up == 'w') // ulU
+				sequence("ulU", solution);
+			else // U2FU2
+				sequence("UUFUU", solution);
+		}
+
+
+		position = searchEdge('w', 'o'); // White/orange
+		if (position == 3) {
+			if (edge[3].down == 'w') // LuFU
+				sequence("LuFU", solution);
+		}
+		else if (position == 4) {
+			if (edge[4].up == 'w') // dL2
+				sequence("dLL", solution);
+			else // Flf
+				sequence("Flf", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].up == 'w') // D2L2
+				sequence("DDLL", solution);
+			else // dFlf
+				sequence("dFlf", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].up == 'w') // DL2
+				sequence("DLL", solution);
+			else // bLB
+				sequence("bLB", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].up == 'w') // L2
+				L2(solution);
+			else // luFU
+				sequence("luFU", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].up == 'w') // U2RU2
+				sequence("UURUU", solution);
+			else //ufU
+				sequence("ufU", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].up == 'w') // U2rU2
+				sequence("UUrUU", solution);
+			else // UBu
+				sequence("UBu", solution);
+		}
+		else if (position == 10) {
+			if (edge[10].up == 'w') // L
+				L(solution);
+			else // Ubu
+				sequence("Ubu", solution);
+		}
+		else if (position == 11) {
+			if (edge[11].up == 'w') // l
+				l(solution);
+			else // uFU
+				sequence("uFU", solution);
+		}
+	}
+	void Rubik::cornersFirstStep(vector<char>& solution) {
+		int position = searchCorner('w', 'g', 'r'); // White, green and red
+		if (position == 0) {
+			if (corner[0].up == 'w') // LDlrdR
+				sequence("LDlrdR", solution);
+			else if (corner[0].right == 'w') // LrD2lRFDf
+				sequence("LrDDlRFDf", solution);
+			else if (corner[0].left == 'w') // LrDlR
+				sequence("LrDlR", solution);
+		}
+		else if (position == 1) {
+			if (corner[1].right == 'w') // rdRDrdR
+				sequence("rdRDrdR", solution);
+			else if (corner[1].left == 'w') // rDRFDf
+				sequence("rDRFDf", solution);
+		}
+		else if (position == 2) {
+			if (corner[2].up == 'w') // bdBFDf
+				sequence("bdBFDf", solution);
+			else if (corner[2].right == 'w') // bFdBf
+				sequence("bFdBf", solution);
+			else if (corner[2].left == 'w') // bDBdFDf
+				sequence("bDBdFDf", solution);
+		}
+		else if (position == 3) { // BD2brdR
+			if (corner[3].up == 'w')
+				sequence("BDDbrdR", solution);
+			else if (corner[3].right == 'w') // lFD2fL
+				sequence("lFDDfL", solution);
+			else if (corner[3].left == 'w') // BrD2Rb
+				sequence("BrDDRb", solution);
+		}
+		else if (position == 4) {
+			if (corner[4].up == 'w') // rD2RFDf
+				sequence("rDDRFDf", solution);
+			else if (corner[4].right == 'w') // DrdR
+				sequence("DrdR", solution);
+			else if (corner[4].left == 'w') // rDR
+				sequence("rDR", solution);
+		}
+		else if (position == 5) {
+			if (corner[5].up == 'w') // rD2RDrdR
+				sequence("rDDRDrdR", solution);
+			else if (corner[5].right == 'w') // rdR
+				sequence("rdR", solution);
+			else if (corner[5].left == 'w') // FDf
+				sequence("FDf", solution);
+		}
+		else if (position == 6) {
+			if (corner[6].up == 'w') // FD2frdR
+				sequence("FDDfrdR", solution);
+			else if (corner[6].right == 'w') // Fdf
+				sequence("Fdf", solution);
+			else if (corner[6].left == 'w') // dFDf
+				sequence("dFDf", solution);
+		}
+		else if (position == 7) {
+			if (corner[7].up == 'w') // rdRFDf
+				sequence("rdRFDf", solution);
+			else if (corner[7].right == 'w') // FD2f
+				sequence("FDDf", solution);
+			else if (corner[7].left == 'w') // rD2R
+				sequence("rDDR", solution);
+		}
+
+
+		position = searchCorner('w', 'r', 'l'); // White, red and blue
+		if (position == 0) {
+			if (corner[0].up == 'w') // LD2lbdB
+				sequence("LDDlbdB", solution);
+			else if (corner[0].right == 'w') // fRD2rF
+				sequence("fRDDrF", solution);
+			else if (corner[0].left == 'w') // LbD2Bl
+				sequence("LbDDBl", solution);
+		}
+		else if (position == 2) {
+			if (corner[2].right == 'w') // bdBDbdB
+				sequence("bdBDbdB", solution);
+			else if (corner[2].left == 'w') // bDBRDr
+				sequence("bDBRDr", solution);
+		}
+		else if (position == 3) {
+			if (corner[3].up == 'w') // BDbRD2r
+				sequence("BDbRDDr", solution);
+			else if (corner[3].right == 'w') // lRdLr
+				sequence("lRdLr", solution);
+			else if (corner[3].left == 'w') // BDB2D2B
+				sequence("BDBBDDB", solution);
+		}
+		else if (position == 4) {
+			if (corner[4].up == 'w') // bdBRDr
+				sequence("bdBRDr", solution);
+			else if (corner[4].right == 'w') // RD2r
+				sequence("RDDr", solution);
+			else if (corner[4].left == 'w') // bD2B
+				sequence("bDDB", solution);
+		}
+		else if (position == 5) {
+			if (corner[5].up == 'w') // bD2BRDr
+				sequence("bDDBRDr", solution);
+			else if (corner[5].right == 'w') // DbdB
+				sequence("DbdB", solution);
+			else if (corner[5].left == 'w') // bDB
+				sequence("bDB", solution);
+		}
+		else if (position == 6) {
+			if (corner[6].up == 'w') // bD2BDbdB
+				sequence("bDDBDbdB", solution);
+			else if (corner[6].right == 'w') // bdB
+				sequence("bdB", solution);
+			else if (corner[6].left == 'w') // RDr
+				sequence("RDr", solution);
+		}
+		else if (position == 7) {
+			if (corner[7].up == 'w') // RD2rbdB
+				sequence("RDDrbdB", solution);
+			else if (corner[7].right == 'w') // Rdr
+				sequence("Rdr", solution);
+			else if (corner[7].left == 'w') // dRDr
+				sequence("dRDr", solution);
+		}
+
+
+		position = searchCorner('w', 'l', 'o'); // White, blue and orange
+		if (position == 0) {
+			if (corner[0].up == 'w') // fdFBDb
+				sequence("fdFBDb", solution);
+			else if (corner[0].right == 'w') // fBdFb
+				sequence("fBdFb", solution);
+			else if (corner[0].left == 'w') // fDFdBDb
+				sequence("fDFdBDb", solution);
+		}
+		else if (position == 3) {
+			if (corner[3].right == 'w') // BdbldL
+				sequence("BdbldL", solution);
+			else if (corner[3].left == 'w') // BDbdBDb
+				sequence("BDbdBDb", solution);
+		}
+		else if (position == 4) {
+			if (corner[4].up == 'w') // fBD2Fb
+				sequence("fBDDFb", solution);
+			else if (corner[4].right == 'w') // Bdb
+				sequence("Bdb", solution);
+			else if (corner[4].left == 'w') // dBDb
+				sequence("dBDb", solution);
+		}
+		else if (position == 5) {
+			if (corner[5].up == 'w') // LD2lBdb
+				sequence("LDDlBdb", solution);
+			else if (corner[5].right == 'w') // BD2b
+				sequence("BDDb", solution);
+			else if (corner[5].left == 'w') // lD2L
+				sequence("lDDL", solution);
+		}
+		else if (position == 6) {
+			if (corner[6].up == 'w') // lD2LBDb
+				sequence("lDDLBDb", solution);
+			else if (corner[6].right == 'w') // DldL
+				sequence("DldL", solution);
+			else if (corner[6].left == 'w') // lDL
+				sequence("lDL", solution);
+		}
+		else if (position == 7) {
+			if (corner[7].up == 'w') // BdblD2L
+				sequence("BdblDDL", solution);
+			else if (corner[7].right == 'w') // ldL --> DLdl
+				sequence("ldL", solution);
+			//sequence("DLdl", solution)
+			else if (corner[7].left == 'w') // BDb
+				sequence("BDb", solution);
+		}
+	}
+
+	void Rubik::secondStep(vector<char>& solution) {
+		int position = searchEdge('g', 'o'); // Green/orange
+		if (position == 4) {
+			if (edge[4].down == 'g') // dfDF
+				sequence("dfDF", solution);
+			else if (edge[4].up == 'g') // Ldl
+				sequence("Ldl", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].down == 'g') // fdF
+				sequence("fdF", solution);
+			else if (edge[5].up == 'g') // LD2l
+				sequence("LDDl", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].up == 'g') // LDl
+				sequence("LDl", solution);
+			else if (edge[6].down == 'g') // fD2F
+				sequence("fDDF", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].down == 'g') // fDF
+				sequence("fDF", solution);
+			else if (edge[7].up == 'g') // DLdl
+				sequence("DLdl", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].down == 'g') // urD2RUfDF
+				sequence("urDDRUfDF", solution);
+			else if (edge[8].up == 'g') // urdRULdl
+				sequence("urdRULdl", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].down == 'g') // U2bdBU2LD2l
+				sequence("UUbdBUULDDl", solution);
+			else if (edge[9].up == 'g') // U2bDBU2fDF
+				sequence("UUbDBUUfDF", solution);
+		}
+		else if (position == 10) {
+			if (edge[10].down == 'g') // UBD2buLdl
+				sequence("UBDDbuLdl", solution);
+			else if (edge[10].up == 'g') // UBDbufDF
+				sequence("UBDbufDF", solution);
+		}
+		else if (position == 11) {
+			if (edge[11].down == 'g') // LDldfDF
+				sequence("LDldfDF", solution);
+		}
+
+		U(solution); //
+		position = searchEdge('o', 'l'); // Orange/blue
+		if (position == 4) {
+			if (edge[4].down == 'o') // ldL
+				sequence("ldL", solution);
+			else if (edge[4].up == 'o') // BD2b
+				sequence("BDDb", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].down == 'o') // lD2L
+				sequence("lDDL", solution);
+			else if (edge[5].up == 'o') // BDb
+				sequence("BDb", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].down == 'o') // lDL
+				sequence("lDL", solution);
+			else if (edge[6].up == 'o') // DBdb
+				sequence("DBdb", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].down == 'o') // DldL
+				sequence("DldL", solution);
+			else if (edge[7].up == 'o') // Bdb
+				sequence("Bdb", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].down == 'o') // U2rDRU2lDL
+				sequence("UUrDRUUlDL", solution);
+			else if (edge[8].up == 'o') // U2rD2RU2Bdb
+				sequence("UUrDDRUUBdb", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].down == 'o') // URDrulDL
+				sequence("URDrulDL", solution);
+			else if (edge[9].up == 'o') // URD2ruBdb
+				sequence("URDDruBdb", solution);
+		}
+		else if (position == 10) {
+			if (edge[10].up == 'o') // BDbdlDL
+				sequence("BDbdlDL", solution);
+		}
+
+		U(solution); //
+		position = searchEdge('r', 'l'); // Blue/red
+		if (position == 4) {
+			if (edge[4].down == 'r') // RDr
+				sequence("RDr", solution);
+			else if (edge[4].up == 'r') // bD2B
+				sequence("bDDB", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].down == 'r') // dRDr
+				sequence("dRDr", solution);
+			else if (edge[5].up == 'r') // bDB
+				sequence("bDB", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].down == 'r') // Rdr
+				sequence("Rdr", solution);
+			else if (edge[6].up == 'r') // dbDB
+				sequence("dbDB", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].down == 'r') // RD2r
+				sequence("RDDr", solution);
+			else if (edge[7].up == 'r') // bdB
+				sequence("bdB", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].down == 'r') // UrdRuRDr
+				sequence("UrdRuRDr", solution);
+			else if (edge[8].up == 'r') // UrdRubD2B
+				sequence("UrdRubDDB", solution);
+		}
+		else if (position == 9) {
+			if (edge[9].up == 'r') // bD2BRDr
+				sequence("bDDBRDr", solution);
+		}
+
+
+		U(solution);
+		position = searchCorner('w', 'o', 'g'); // White, orange and green
+		if (position == 4) {
+			if (corner[4].up == 'w') // rD2RFDf
+				sequence("rDDRFDf", solution);
+			else if (corner[4].right == 'w') // DrdR
+				sequence("DrdR", solution);
+			else if (corner[4].left == 'w') // rDR
+				sequence("rDR", solution);
+		}
+		else if (position == 5) {
+			if (corner[5].up == 'w') // rD2RDrdR
+				sequence("rDDRDrdR", solution);
+			else if (corner[5].right == 'w') // rdR
+				sequence("rdR", solution);
+			else if (corner[5].left == 'w') // FDf
+				sequence("FDf", solution);
+		}
+		else if (position == 6) {
+			if (corner[6].up == 'w') // FD2frdR
+				sequence("FDDfrdR", solution);
+			else if (corner[6].right == 'w') // Fdf
+				sequence("Fdf", solution);
+			else if (corner[6].left == 'w') // dFDf
+				sequence("dFDf", solution);
+		}
+		else if (position == 7) {
+			if (corner[7].up == 'w') // rdRFDf
+				sequence("rdRFDf", solution);
+			else if (corner[7].right == 'w') // FD2f
+				sequence("FDDf", solution);
+			else if (corner[7].left == 'w') // rD2R
+				sequence("rDDR", solution);
+		}
+		else if (position == 1) {
+			if (corner[1].left == 'w') // rDRFDf
+				sequence("rDRFDf", solution);
+			else if (corner[1].right == 'w') // rdRDrdR
+				sequence("rdRDrdR", solution);
+		}
+
+
+		U(solution); // Devolver la esquina a su sitio.
+		position = searchEdge('g', 'r'); // Green/red
+		if (position == 4) {
+			if (edge[4].down == 'g') // drDRDFdf
+				sequence("drDRDFdf", solution);
+			else if (edge[4].up == 'g') // D2FdfdrDR
+				sequence("DDFdfdrDR", solution);
+		}
+		else if (position == 5) {
+			if (edge[5].down == 'g') // D2rDRDFdf
+				sequence("DDrDRDFdf", solution);
+			else if (edge[5].up == 'g') // DFdfdrDR
+				sequence("DFdfdrDR", solution);
+		}
+		else if (position == 6) {
+			if (edge[6].down == 'g') // DrDRDFdf
+				sequence("DrDRDFdf", solution);
+			else if (edge[6].up == 'g') // FdfdrDR
+				sequence("FdfdrDR", solution);
+		}
+		else if (position == 7) {
+			if (edge[7].down == 'g') // rDRDFdf
+				sequence("rDRDFdf", solution);
+			else if (edge[7].up == 'g') // dFdfdrDR
+				sequence("dFdfdrDR", solution);
+		}
+		else if (position == 8) {
+			if (edge[8].down == 'g') // rdRDFDfDrDRDFdf
+				sequence("rdRDFDfDrDRDFdf", solution);
+		}
+	}
+
+
 	// Public interface
 	Rubik::Rubik() {
 		corner[3].up = edge[2].up = corner[2].up = edge[3].up = center[0].center = edge[1].up = 'w';
