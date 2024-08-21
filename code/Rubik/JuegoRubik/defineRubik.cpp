@@ -975,6 +975,102 @@ namespace solver {
 				sequence("LdrDldRD", solution);
 		}
 	}
+	void Rubik::positionFinalCorners(vector<char>& solution) {
+		// Orientate final corners
+
+		if ((corner[4].up == 'y') && (corner[5].right == 'y') &&
+			(corner[7].up == 'y') && (corner[6].left == 'y')) // RD2rdRdrlD2LDlDL
+			sequence("RDDrdRdrlDDLDlDL", solution);
+		else if ((corner[4].left == 'y') && (corner[5].up == 'y') &&
+			(corner[7].right == 'y') && (corner[6].up == 'y')) // LD2ldLdlrD2RDrDR
+			sequence("LDDldLdlrDDRDrDR", solution);
+		else if ((corner[4].left == 'y') && (corner[5].right == 'y') &&
+			(corner[7].right == 'y') && (corner[6].left == 'y')) // RD2rdRdrlD2LDlDL LD2ldLdlrD2RDrDR
+			sequence("RDDrdRdrlDDLDlDLLDDldLdlrDDRDrDR", solution);
+		else if ((corner[4].right == 'y') && (corner[5].left == 'y') &&
+			(corner[7].up == 'y') && (corner[6].up == 'y')) // FD2fdFdfbD2BDbDB
+			sequence("FDDfdFdfbDDBDbDB", solution);
+		else if ((corner[4].up == 'y') && (corner[5].up == 'y') &&
+			(corner[7].left == 'y') && (corner[6].right == 'y')) // BD2bdBdbfD2FDfDF
+			sequence("BDDbdBdbfDDFDfDF", solution);
+		else if ((corner[4].right == 'y') && (corner[5].left == 'y') && //
+			(corner[7].left == 'y') && (corner[6].right == 'y')) // FD2fdFdfbD2BDbDB BD2bdBdbfD2FDfDF
+			sequence("FDDfdFdfbDDBDbDBBDDbdBdbfDDFDfDF", solution);
+		else if ((corner[4].up == 'y') && (corner[5].left == 'y') &&
+			(corner[7].up == 'y') && (corner[6].right == 'y')) // ldLdlD2LRDrDRD2r
+			sequence("ldLdlDDLRDrDRDDr", solution);
+		else if ((corner[4].right == 'y') && (corner[5].up == 'y') &&
+			(corner[7].left == 'y') && (corner[6].up == 'y')) // rdRdrD2RLDlDLD2l
+			sequence("rdRdrDDRLDlDLDDl", solution);
+		else if ((corner[4].up == 'y') && (corner[5].up == 'y') &&
+			(corner[7].right == 'y') && (corner[6].left == 'y')) // fdFdfD2FBDbDBD2b
+			sequence("fdFdfDDFBDbDBDDb", solution);
+		else if ((corner[4].left == 'y') && (corner[5].right == 'y') &&
+			(corner[7].up == 'y') && (corner[6].up == 'y')) // bdBdbD2BFDfDFD2f
+			sequence("bdBdbDDBFDfDFDDf", solution);
+		else if ((corner[4].left == 'y') && (corner[5].right == 'y') &&
+			(corner[7].right == 'y') && (corner[6].left == 'y')) // fdFdfD2FBDbDBD2b bdBdbD2BFDfDFD2f
+			sequence("fdFdfDDFBDbDBDDbbdBdbDDBFDfDFDDf", solution);
+		else if ((corner[4].right == 'y') && (corner[5].left == 'y') &&
+			(corner[7].right == 'y') && (corner[6].left == 'y')) // FD2fdFdfbD2BDbDB fdFdfD2FBDbDBD2b
+			sequence("FDDfdFdfbDDBDbDBfdFdfDDFBDbDBDDb", solution);
+		else if ((corner[4].left == 'y') && (corner[5].right == 'y') &&
+			(corner[7].left == 'y') && (corner[6].right == 'y')) // bdBdbD2BFDfDFD2f BD2bdBdbfD2FDfDF
+			sequence("bdBdbDDBFDfDFDDfBDDbdBdbfDDFDfDF", solution);
+		else if ((corner[4].right == 'y') && (corner[5].right == 'y') &&
+			(corner[7].left == 'y') && (corner[6].left == 'y')) // rdRdrD2RLDlDLD2l RD2rdRdrlD2LDlDL
+			sequence("rdRdrDDRLDlDLDDlRDDrdRdrlDDLDlDL", solution);
+		else if ((corner[4].left == 'y') && (corner[5].left == 'y') &&
+			(corner[7].right == 'y') && (corner[6].right == 'y')) // LD2ldLdlrD2RDrDR ldLdlD2LRDrDRD2r
+			sequence("LDDldLdlrDDRDrDRldLdlDDLRDrDRDDr", solution);
+
+		//
+		int yellows = 0;
+		for (int i = 0; i < 4; i++) {
+			if (corner[4 + i].up == 'y')
+				++yellows;
+		}
+		if (yellows == 1) {
+			if (corner[4].up == 'y') {
+				if (corner[5].right == 'y') // RUruRUrudRUruRUrudRUruRUruD2
+					sequence("RUruRUrudRUruRUrudRUruRUruDD", solution);
+				else if (corner[5].left == 'y') // fuFUfuFUdfuFUfuFUdfuFUfuFUD2
+					sequence("fuFUfuFUdfuFUfuFUd fuFUfuFUDD", solution);
+			}
+			else if (corner[5].up == 'y') {
+				if (corner[4].right == 'y') // FUfuFUfuDFUfuFUfuDFUfuFUfuD2
+					sequence("FUfuFUfuDFUfuFUfuDFUfuFUfuDD", solution);
+				else if (corner[4].left == 'y') // luLUluLUDluLUluLUDluLUluLUD2
+					sequence("luLUluLUDluLUluLUDluLUluLUDD", solution);
+			}
+			else if (corner[6].up == 'y') {
+				if (corner[5].right == 'y') // RUruRUruDRUruRUruDRUruRUruD2
+					sequence("RUruRUruDRUruRUruDRUruRUruDD", solution);
+				else if (corner[5].left == 'y') // fuFUfuFUDfuFUfuF UDfuFUfuFUD2
+					sequence("fuFUfuFUDfuFUfuFUDfuFUfuFUDD", solution);
+			}
+			else if (corner[7].up == 'y') {
+				if (corner[5].right == 'y') // RUruRUruDRUruRUruD2RUruRUruD
+					sequence("RUruRUruDRUruRUruDDRUruRUruD", solution);
+				else if (corner[5].left == 'y') // fuFUfuFUDfuFUfuFUD2fuFUfuFUD
+					sequence("fuFUfuFUDfuFUfuFUDDfuFUfuFUD", solution);
+			}
+		}
+		else if (yellows == 2) {
+			if ((corner[4].up != 'y') && (corner[6].up != 'y')) {
+				if (corner[4].left == 'y') // luLUluLUD2luLUluLUluLUluLUD2
+					sequence("luLUluLUDDluLUluLUluLUluLUDD", solution);
+				else if (corner[4].right == 'y') // luLUluLUluLUluLUD2 luLUluLUD2
+					sequence("luLUluLUluLUluLUDDluLUluLUDD", solution);
+			}
+			else if ((corner[5].up != 'y') && (corner[7].up != 'y')) {
+				if (corner[5].left == 'y') // fuFUfuFUD2fuFUfuFUfuFUfuFUD2
+					sequence("fuFUfuFUDDfuFUfuFUfuFUfuFUDD", solution);
+				else if (corner[5].right == 'y') // fuFUfuFUfuFUf uFUD2fuFUfuFUD2
+					sequence("fuFUfuFUfuFUfuFUDDfuFUfuFUDD", solution);
+			}
+		}
+	}
 
 
 	// Public interface
