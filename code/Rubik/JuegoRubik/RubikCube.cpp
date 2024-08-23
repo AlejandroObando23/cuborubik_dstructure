@@ -1,5 +1,34 @@
 #include "RubikCube.h"
 
+void Cube::chooseColor(const Shader& program, GLint i)
+{
+	switch (colors[i])
+	{
+	case 'W': // white color
+		program.setVec3("changingColor", 1.0f, 1.0f, 1.0f);
+		break;
+	case 'O': // orange color
+		program.setVec3("changingColor", 0.945f, 0.372f, 0.054f);
+		break;
+	case 'G': // green color
+		program.setVec3("changingColor", 0.227, 0.984, 0.035);
+		break;
+	case 'R': // red color
+		program.setVec3("changingColor", 1.0f, 0.0f, 0.0f);
+		break;
+	case 'B': // blue color
+		program.setVec3("changingColor", 0.031f, 0.231f, 0.968f);
+		break;
+	case 'Y': // yellow color
+		program.setVec3("changingColor", 0.933f, 0.952f, 0.086f);
+		break;
+	default: // black color by default
+		program.setBool("fill", false); // no hay fill
+		program.setVec3("changingColor", 0.0f, 0.0f, 0.0f);
+		program.setBool("fill", true); // fill de nuevo a true
+		break;
+	}
+}
 
 // class cube initializations
 Cube::Cube()
@@ -34,6 +63,55 @@ Cube::Cube(glm::mat4 model_, glm::vec3 pos_)
 	colors[5] = 'Y'; // DOWN - Yellow
 }
 
+void Cube::draw()
+{
+	// ahora pintaremos cada cara del cubo con su respectivo color dependiendo del índice
+
+	for (GLint i = 0; i < 9; ++i)
+	{
+		switch (i)
+		{
+		case 0:// up face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(0 * sizeof(GLuint)));
+			break;
+		case 1:// left face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(6 * sizeof(GLuint)));
+			break;
+		case 2:// front face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(GLuint)));
+			break;
+		case 3:// right face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(18 * sizeof(GLuint)));
+			break;
+		case 4:// back face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(24 * sizeof(GLuint)));
+			break;
+		case 5:// down face
+			chooseColor(program, i);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(30 * sizeof(GLuint)));
+			break;
+		}
+	}
+
+	// luego dibujamos las líneas
+	// UP face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(36 * sizeof(GLuint)));
+	// LEFT face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(40 * sizeof(GLuint)));
+	// FRONT face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(44 * sizeof(GLuint)));
+	// RIGHT face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(48 * sizeof(GLuint)));
+	// BACK face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(52 * sizeof(GLuint)));
+	// DOWN face
+	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(56 * sizeof(GLuint)));
+}
 
 Cube::~Cube() {}
 
