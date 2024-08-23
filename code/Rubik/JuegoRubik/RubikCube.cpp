@@ -63,11 +63,12 @@ Cube::Cube(glm::mat4 model_, glm::vec3 pos_)
 	colors[5] = 'Y'; // DOWN - Yellow
 }
 
-void Cube::draw()
+void Cube::draw(const Shader& program)
 {
 	// ahora pintaremos cada cara del cubo con su respectivo color dependiendo del índice
+	program.setBool("fill", true);
 
-	for (GLint i = 0; i < 9; ++i)
+	for (GLint i = 0; i < NFACES; ++i)
 	{
 		switch (i)
 		{
@@ -99,6 +100,8 @@ void Cube::draw()
 	}
 
 	// luego dibujamos las líneas
+	program.setBool("fill", false);
+	program.setVec3("changingColor", 0.0f, 0.0f, 0.0f);
 	// UP face
 	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_INT, (void*)(36 * sizeof(GLuint)));
 	// LEFT face
@@ -192,13 +195,16 @@ void RubikCube3x3::CalculateRotation(float& parts, glm::vec3& axis, glm::mat4& r
 //////////////////////
 // PUBLIC INTERFACE //
 //////////////////////
-RubikCube3x3::RubikCube3x3()
+RubikCube3x3::RubikCube3x3(const Shader& program_)
 {
 	// inicializando los atributos
+	program = program_;
 	RVAO = 0; // valor por defecto del VAO
 	global_model = glm::mat4(1.0f);
 	inverse_global_model = glm::inverse(global_model);
 
+
+	program.use();
 
 	// primer nivel
 	// posiciones
@@ -298,6 +304,39 @@ void RubikCube3x3::ApplyTransformation(glm::mat4 glob_trans)
 	inverse_global_model = glm::inverse(global_model);
 }
 // pasamos como parámetros las matrices de vista y proyección globales
+void RubikCube3x3::DrawCube(glm::mat4& view, glm::mat4& projection)
+{
+	// render cube
+	glBindVertexArray(RVAO);
+	//// activando la textura con su respectiva unidad de textura
+	for (int i = 0; i < textureUnits.size(); ++i) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, textureUnits[i]);
+	}
+
+	program.setFloat("mixRatio", sin(glfwGetTime() * 2.0f) * 0.5f + 0.5f);
+
+	for (int i = 0; i < NCUBES; ++i)
+	{
+		if (i == 13) continue; // no pintaremos el cubo porque es el interior
+		// al principio debemos trasaladar cada cubo a su posición
+		// pero luego debemos quitar tal traslación para que no desaparezcan
+		// en el infinito tales cubos
+		cubes[i].model = glm::translate(cubes[i].model, cubes[i].pos);
+		cubes[i].model = global_model * cubes[i].model;
+		program.use();
+		program.setMat4("projection", projection);
+		program.setMat4("view", view);
+		program.setMat4("model", cubes[i].model);
+
+		cubes[i].draw(program);
+
+		cubes[i].model = inverse_global_model * cubes[i].model;
+		// aquí quitamos la traslación del cubo
+		cubes[i].model = glm::translate(cubes[i].model, -cubes[i].pos);
+	}
+
+}
 void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_ANIMATION& move_state, PAINT_MODE& animation)
 {
 	static float turbo = 0.70f;
