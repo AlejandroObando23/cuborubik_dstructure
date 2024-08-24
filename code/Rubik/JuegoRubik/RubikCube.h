@@ -16,6 +16,8 @@
 #include <stack>
 #include <queue>
 #include <algorithm>
+
+#include "shader.h"
 #include "defineRubik.h"
 
 // usa 26 shaders para cada cubo
@@ -132,6 +134,7 @@ class Cube
 {
 private:
 	static const int NFACES = 6;
+	void chooseColor(const Shader& program, GLint i);
 public:
 	char colors[NFACES];
 
@@ -140,6 +143,7 @@ public:
 	Cube();
 	Cube(const Cube& another_cube);
 	Cube(glm::mat4 model_, glm::vec3 pos_);
+	void draw(const Shader& program);
 	~Cube();
 };
 
@@ -148,6 +152,7 @@ class RubikCube3x3
 public:
 	enum class STATE_ANIMATION { NONE, F, f, U, u, L, l, R, r, B, b, D, d, SOLVE };
 	enum class PAINT_MODE { BREATHE, STATIC };
+	Shader program;
 private:
 	static const int NCUBES = 27;
 	static const int MAX_N_TEXTURES = 2;
@@ -188,6 +193,7 @@ private:
 	} animator;
 public:
 	// Constructores y dem�s funciones para la configuraci�n
+	RubikCube3x3(const Shader& program_);
 	void AssociateVAO(GLuint VAO);
 
 	// Funciones del cubo
