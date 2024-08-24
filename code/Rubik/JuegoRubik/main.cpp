@@ -64,13 +64,29 @@ int main()
     }
 
     // configurar el estado global de openGL
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
 
+    // configurar los atributos de los vertices
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
 
     // build and compile our shader zprogram
     // ------------------------------------
     GLuint VBO[1], VAO[1], EBO[1];
     glGenVertexArrays(1, VAO);
+    glGenBuffers(1, VBO);
+    glGenBuffers(1, EBO);
+
+    glBindVertexArray(VAO[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_indices), cube_indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_fill_vertices), cube_fill_vertices, GL_STATIC_DRAW);
+    // atributo de posicion
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
     // atributo de color
     //asociamos el VAO correspondiente
     
