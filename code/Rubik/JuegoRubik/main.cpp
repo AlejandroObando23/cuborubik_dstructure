@@ -31,6 +31,15 @@ bool pressedSolve = false;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
+bool mouseActivo = false; // toggle vista del mouse
+bool mostrarCheckbox = false;
+
+// rubik cube
+RubikCube3x3::STATE_ANIMATION animation_state = RubikCube3x3::STATE_ANIMATION::NONE;
+RubikCube3x3::PAINT_MODE paint_mode = RubikCube3x3::PAINT_MODE::STATIC;
+enum class PROYECTION_TYPE { PERSPECTIVE, ORTHOGONAL };
+PROYECTION_TYPE proy_type = PROYECTION_TYPE::PERSPECTIVE;
+
 int main()
 {
     // inicializar glfw
@@ -189,4 +198,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     //actualizar el tamaño del viewport de openGl segun las nuevas dimensiones
     glViewport(0, 0, width, height);
+}
+
+float random(float a, float b) 
+{
+    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    std::uniform_real_distribution<float> dis(a, b);
+    return dis(gen);
 }
