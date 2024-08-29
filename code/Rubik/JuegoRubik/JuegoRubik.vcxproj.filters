@@ -35,6 +35,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="vertexShader.glsl" />
+    <None Include="vertexShaderLight.glsl" />
+    <None Include="fragmentShader.glsl" />
+    <None Include="fragmentShaderLight.glsl" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="RubikCube.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

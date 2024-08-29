@@ -16,6 +16,13 @@
 #include "shader.h"
 #include "defineRubik.h"
 
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void processInput(GLFWwindow* window);
+
 float random(float a, float b);
 
 // settings
@@ -64,6 +71,9 @@ int main()
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     // CONFIGURANDO GLFW PARA CAPTURAR EL MOUSE
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -166,7 +176,8 @@ int main()
         lastFrame = currentFrame;
 
         // Procesar las entradas (teclado, raton etc)
-        // ----
+        // -----
+        processInput(window);
 
         // render
         // ------

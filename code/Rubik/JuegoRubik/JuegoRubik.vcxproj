@@ -139,6 +139,12 @@
     <ClCompile Include="shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fragmentShader.glsl" />
+    <None Include="fragmentShaderLight.glsl" />
+    <None Include="vertexShader.glsl" />
+    <None Include="vertexShaderLight.glsl" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="defineRubik.h" />
     <ClInclude Include="RubikCube.h" />
     <ClInclude Include="shader.h" />
