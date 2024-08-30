@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="defineRubik.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
