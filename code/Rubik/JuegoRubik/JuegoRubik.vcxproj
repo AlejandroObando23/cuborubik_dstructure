@@ -145,6 +145,7 @@
     <None Include="vertexShaderLight.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="defineRubik.h" />
     <ClInclude Include="RubikCube.h" />
     <ClInclude Include="shader.h" />

@@ -47,6 +47,9 @@
     <ClInclude Include="shader.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="defineRubik.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

@@ -14,6 +14,7 @@
 #include <vector>
 // learnopenGL libraries
 #include "shader.h"
+#include "camera.h"
 #include "defineRubik.h"
 
 
@@ -29,6 +30,8 @@ float random(float a, float b);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// camera
+Camera camera(glm::vec3(0.0f, 0.0f, 10.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -185,6 +188,15 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // camera/view transformaciones
+        glm::mat4 view = camera.GetViewMatrix(); 
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        if(proy_type == PROYECTION_TYPE::ORTHOGONAL)
+            projection = glm::ortho(-4.0f, 4.0f, -3.0f, 3.0f, 0.1f, 100.0f);
+
+        // dibujamos el cubo de rubik
+        if (animation_state == RubikCube3x3::STATE_ANIMATION::SOLVE) 
+            rubik.Solve(animation_state);
+        rubik.HandleDrawing(view, projection, animation_state, paint_mode);
 
 
         glfwSwapBuffers(window); //Refrescar la pantalla
@@ -201,7 +213,21 @@ int main()
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// --------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+    
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+}
 
 // glfw: Funcion que se llama cada vez que actualizamos el tamaño de la ventana
 // ---------------------------------------------------------------------------------------------
