@@ -1,4 +1,6 @@
 #include "RubikCube.h"
+#include "controladorSonido.h"
+float velAnimacion = 0.2;
 
 void Cube::chooseColor(const Shader& program, GLint i)
 {
@@ -183,7 +185,7 @@ void RubikCube3x3::HandleRubikMoves(char movement)
 // orientation: h significa horario, a significa antihorario
 void RubikCube3x3::CalculateRotation(float& parts, glm::vec3& axis, glm::mat4& rotationMatrix, char orientation)
 {
-	step = (angle + step >= 90.0f) ? 90.0f - angle : 90.0f / parts;
+	step = (angle + step >= 90.0f) ? 90.0f - angle : 90.0f / parts * velAnimacion;
 	// en este caso rotaremos por el step
 	float w = cosf(glm::radians((orientation == 'h' ? -step : step) / 2));
 	float v = sinf(glm::radians((orientation == 'h' ? -step : step) / 2));
@@ -351,6 +353,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		{
 			
 			if (F(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('F');
 				
@@ -360,6 +363,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::f:
 		{
 			if (f(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('f');
 			}
@@ -368,6 +372,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::R:
 		{
 			if (R(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('R');
 			}
@@ -376,6 +381,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::r:
 		{
 			if (r(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('r');
 			}
@@ -384,6 +390,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::U:
 		{
 			if (U(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('U');
 			}
@@ -392,6 +399,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::u:
 		{
 			if (u(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('u');
 			}
@@ -400,6 +408,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::B:
 		{
 			if (B(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('B');
 				
@@ -409,6 +418,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::b:
 		{
 			if (b(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('b');
 			}
@@ -417,6 +427,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::L:
 		{
 			if (L(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('L');
 				
@@ -426,6 +437,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::l:
 		{
 			if (l(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('l');
 				
@@ -435,6 +447,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::D:
 		{
 			if (D(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('D');
 			}
@@ -443,6 +456,7 @@ void RubikCube3x3::HandleDrawing(glm::mat4& view, glm::mat4& projection, STATE_A
 		case STATE_ANIMATION::d:
 		{
 			if (d(parts)) {
+				ControladorSonido::reproducirSonido();
 				move_state = solutionStates.empty() ? STATE_ANIMATION::NONE : solutionStates.front();
 				HandleRubikMoves('d');
 			}

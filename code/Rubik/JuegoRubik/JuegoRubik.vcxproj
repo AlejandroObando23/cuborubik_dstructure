@@ -132,6 +132,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Linking\include\imGui\imgui.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_demo.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_draw.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_tables.cpp" />
+    <ClCompile Include="..\Linking\include\imGui\imgui_widgets.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="defineRubik.cpp" />
     <ClCompile Include="glad.c" />
@@ -150,6 +157,10 @@
     <ClInclude Include="defineRubik.h" />
     <ClInclude Include="RubikCube.h" />
     <ClInclude Include="shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Fondo.wav" />
+    <Media Include="movimiento.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,27 @@
     <ClCompile Include="glad.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_tables.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_widgets.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_demo.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_draw.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_impl_glfw.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Linking\include\imGui\imgui_impl_opengl3.cpp">
+      <Filter>imGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertexShader.glsl" />
@@ -56,5 +77,13 @@
     <ClInclude Include="defineRubik.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="movimiento.wav">
+      <Filter>Archivos de recursos</Filter>
+    </Media>
+    <Media Include="Fondo.wav">
+      <Filter>Archivos de recursos</Filter>
+    </Media>
   </ItemGroup>
 </Project>
