@@ -229,12 +229,74 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (animation_state == RubikCube3x3::STATE_ANIMATION::NONE) {
+        if (key == GLFW_KEY_KP_0 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::F;
+        if (key == GLFW_KEY_KP_1 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::f;
+        if (key == GLFW_KEY_KP_2 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::R;
+        if (key == GLFW_KEY_KP_3 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::r;
+        if (key == GLFW_KEY_KP_4 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::U;
+        if (key == GLFW_KEY_KP_5 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::u;
+        if (key == GLFW_KEY_KP_6 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::B;
+        if (key == GLFW_KEY_KP_7 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::b;
+        if (key == GLFW_KEY_KP_8 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::L;
+        if (key == GLFW_KEY_KP_9 && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::l;
+        if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::D;
+        if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::d;
+        if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+            animation_state = RubikCube3x3::STATE_ANIMATION::SOLVE;
+    }
+
+    if (key == GLFW_KEY_O && action == GLFW_PRESS)
+        proy_type = PROYECTION_TYPE::ORTHOGONAL;
+    if (key == GLFW_KEY_P && action == GLFW_PRESS)
+        proy_type = PROYECTION_TYPE::PERSPECTIVE;
+}
+
 // glfw: Funcion que se llama cada vez que actualizamos el tamaño de la ventana
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     //actualizar el tamaño del viewport de openGl segun las nuevas dimensiones
     glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
+// glfw: se llama cada vez que el scroll del mouse se use
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    camera.ProcessMouseScroll(yoffset);
 }
 
 float random(float a, float b) 
