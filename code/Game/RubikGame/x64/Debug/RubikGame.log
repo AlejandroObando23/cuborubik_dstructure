@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\MY MSI\Documents\estruc\P3\rubikProyect\code\Game\RubikGame\src\main.cpp(28,4): warning C4551: la llamada a la función no tiene lista de argumentos
+C:\Users\MY MSI\Documents\estruc\P3\rubikProyect\code\Game\RubikGame\src\main.cpp(35,3): warning C4551: la llamada a la función no tiene lista de argumentos
+C:\Users\MY MSI\Documents\estruc\P3\rubikProyect\code\Game\RubikGame\src\main.cpp(151,2): warning C4551: la llamada a la función no tiene lista de argumentos
+  RubikGame.vcxproj -> C:\Users\MY MSI\Documents\estruc\P3\rubikProyect\code\Game\x64\Debug\RubikGame.exe
