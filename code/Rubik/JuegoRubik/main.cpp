@@ -223,7 +223,7 @@ int main()
 
         //GUI
         ImGui::Begin("Instrucciones");
-        ImGui::Text("Use el teclado numerico para girar el cubo");
+        ImGui::Text("USA TAB PARA SACAR EL CURSOR\nMOUSE para mover la camara y WASD para moverse\nPAD 0: Cara Frontal (front) sentido horario\nPAD 1: Cara Frontal (front) sentido antihorario\nPAD 2: Cara Derecha (right) sentido horario\nPAD 3: Cara Derecha (right) sentido antihorario\nPAD 4: Cara Superior (up) sentido horario\nPAD 5: Cara Superior (up) sentido antihorario\nPAD 6: Cara Detrás (back) sentido horario\nPAD 7: Cara Detrás (back) sentido antihorario\nPAD 8: Cara Izquierda (left) sentido horario\nPAD 9: Cara Izquierda (left) sentido antihorario\nPAD +: Cara Abajo (down) sentido horario\nPAD -: Cara Abajo (down) sentido antihorario\nSPACE: RESOLVER CUBO\n");
         ImGui::End();
 
         ImGui::Begin("Configuracion");
