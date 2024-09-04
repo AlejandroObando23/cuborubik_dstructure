@@ -5,6 +5,11 @@
 #include <glm/glm/gtc/matrix_transform.hpp>
 #include <glm/glm/gtc/type_ptr.hpp>
 
+// imGui
+#include <imGui/imgui.h>
+#include <imGui/imgui_impl_glfw.h>
+#include <imGui/imgui_impl_opengl3.h>
+
 // Rubik cube
 #include "RubikCube.h"
 
@@ -17,6 +22,8 @@
 #include "camera.h"
 #include "defineRubik.h"
 
+// Controlador de sonido
+#include "controladorSonido.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -166,6 +173,17 @@ int main()
     RubikCube3x3 rubik(program);
     //asociamos el VAO correspondiente
     rubik.AssociateVAO(VAO[0]);
+
+    // Reproducir musica de fondo
+    ControladorSonido controladorSonido;
+
+    // Inicializacion imGUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
     
     glLineWidth(10.0f); // Delineado del cubo
     // loop de renderizado
@@ -187,6 +205,11 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // Crear los frame de la GUI
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
         // camera/view transformaciones
         glm::mat4 view = camera.GetViewMatrix(); 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -198,6 +221,19 @@ int main()
             rubik.Solve(animation_state);
         rubik.HandleDrawing(view, projection, animation_state, paint_mode);
 
+        //GUI
+        ImGui::Begin("Instrucciones");
+        ImGui::Text("Use el teclado numerico para girar el cubo");
+        ImGui::End();
+
+        ImGui::Begin("Configuracion");
+        if (ImGui::Button("Encender Musica")) {
+            controladorSonido.reproducirMusica();
+        }
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(window); //Refrescar la pantalla
         glfwPollEvents();
@@ -205,6 +241,10 @@ int main()
 
     // Limpiar recuersos utilizados al cerrar el programa
     // ------------------------------------------------------------------------
+    ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui::DestroyContext();
+
     glDeleteVertexArrays(1, VAO);
     glDeleteBuffers(1, VBO);
     glDeleteBuffers(1, EBO);
@@ -258,6 +298,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             animation_state = RubikCube3x3::STATE_ANIMATION::d;
         if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
             animation_state = RubikCube3x3::STATE_ANIMATION::SOLVE;
+    }
+    if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
+        if (!mouseActivo) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            mouseActivo = true;
+        }
+        else {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            mouseActivo = false;
+        }
+            
     }
 
     if (key == GLFW_KEY_O && action == GLFW_PRESS)
